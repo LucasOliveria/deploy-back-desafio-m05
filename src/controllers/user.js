@@ -74,7 +74,6 @@ const updateUser = async (req, res) => {
     return res.status(200).json("Usuário atualizado com sucesso!");
 
   } catch (error) {
-    console.log(error)
     return res.status(500).json("Erro interno do servidor.");
   }
 }
