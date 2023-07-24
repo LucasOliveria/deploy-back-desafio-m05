@@ -6,5 +6,5 @@ create table users (
   email text not null unique,
   password text not null,
   cpf char(11) unique,
-  phone char(11)
+  phone char(11) unique
 );
