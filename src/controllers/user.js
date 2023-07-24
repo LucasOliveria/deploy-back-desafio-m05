@@ -50,7 +50,7 @@ const updateUser = async (req, res) => {
       }
     }
 
-    if (password) {
+    if (password && password.trim() !== "") {
       const encryptedPassword = await bcrypt.hash(password, 10);
       dataToBeUpdated.password = encryptedPassword;
     }
@@ -60,11 +60,15 @@ const updateUser = async (req, res) => {
       if (existingCpf && existingCpf.id !== existingUser.id) {
         return res.status(400).json("O CPF informado já está cadastrado.");
       }
-      dataToBeUpdated.cpf = cpf
+      dataToBeUpdated.cpf = cpf;
     }
 
     if (phone) {
-      dataToBeUpdated.phone = phone
+      const existingPhone = await knex("users").where({ phone }).first();
+      if (existingPhone && existingPhone.id !== existingUser.id) {
+        return res.status(400).json("O telefone informado já está cadastrado.");
+      }
+      dataToBeUpdated.phone = phone;
     }
 
     await knex('users')
