@@ -7,9 +7,11 @@ const verifyJwt = require("../middleware/validateJwt");
 const validateUser = require("../schemes/validateUser");
 const validateLogin = require('../schemes/validateLogin');
 const validateUpdateUser = require("../schemes/validateUpdateUser");
+const validateClient = require('../schemes/validateClient')
 
 const { registerUser, updateUser, getUser } = require("../controllers/user");
 const { login } = require('../controllers/login');
+const { createClient, clientList } = require('../controllers/client')
 
 const routes = express();
 
@@ -21,10 +23,7 @@ routes.use(verifyJwt)
 routes.put('/user', validateSchemas(validateUpdateUser), updateUser);
 routes.get('/user', getUser);
 
-// routes.get('/');
-// routes.put('/');
-// routes.delete('/');
-// routes.get('/');
-// routes.get('/');
+routes.post('/client', validateSchemas(validateClient), createClient);
+routes.get('/client', clientList);
 
 module.exports = routes;

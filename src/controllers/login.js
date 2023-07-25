@@ -1,8 +1,6 @@
-
 const knex = require("../database/knexConfig");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 const login = async (req, res) => {
 
