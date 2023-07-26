@@ -14,10 +14,11 @@ const createClient = async (req, res) => {
       return res.status(400).json("Já existe um cliente cadastrado com este CPF.")
     }
 
-    await knex("clients")
+    const registeredClient = await knex("clients")
       .insert(client)
       .returning("*");
-    return res.status(201).json("Cliente cadastrado com sucesso.")
+
+    return res.status(201).json(registeredClient[0]);
   } catch (err) {
     return res.status(500).json("Erro interno do servidor.")
   }
