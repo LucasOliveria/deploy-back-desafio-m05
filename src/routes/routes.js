@@ -18,7 +18,7 @@ const routes = express();
 routes.post('/user', validateSchemas(validateUser), registerUser);
 routes.post('/login', validateSchemas(validateLogin), login);
 
-routes.use(verifyJwt)
+routes.use(verifyJwt);
 
 routes.put('/user', validateSchemas(validateUpdateUser), updateUser);
 routes.get('/user', getUser);

@@ -1,6 +1,5 @@
 const joi = require("joi");
 
-
 const validateLogin = joi.object({
   email: joi.string().email().required().messages({
     "any.required": "O campo e-mail é obrigatório",
@@ -13,4 +12,4 @@ const validateLogin = joi.object({
   })
 });
 
-module.exports = validateLogin
+module.exports = validateLogin;

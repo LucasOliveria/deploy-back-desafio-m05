@@ -49,5 +49,4 @@ const validateClient = joi.object({
   })
 });
 
-
 module.exports = validateClient;

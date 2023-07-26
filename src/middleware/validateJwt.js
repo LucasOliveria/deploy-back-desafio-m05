@@ -2,31 +2,31 @@ const knex = require("../database/knexConfig");
 const jwt = require('jsonwebtoken');
 
 const verifyJwt = (async (req, res, next) => {
-	const { authorization } = req.headers;
+  const { authorization } = req.headers;
 
-	if (!authorization) {
-		return res.status(401).json("Não autorizado");
-	}
+  if (!authorization) {
+    return res.status(401).json("Não autorizado");
+  }
 
-	const token = authorization.replace('Bearer ', '').trim();
+  const token = authorization.replace('Bearer ', '').trim();
 
-	try {
-		const { id } = jwt.verify(token, process.env.JWT_PASS);
+  try {
+    const { id } = jwt.verify(token, process.env.JWT_PASS);
 
-		const existingUser = await knex('users').where({ id }).first();
+    const existingUser = await knex('users').where({ id }).first();
 
-		if (!existingUser) {
-			return res.status(404).json("Usuário não encontrado");
-		}
+    if (!existingUser) {
+      return res.status(404).json("Usuário não encontrado");
+    }
 
-		const { password, ...user } = existingUser;
+    const { password, ...user } = existingUser;
 
-		req.user = user;
+    req.user = user;
 
-		next();
-	} catch (error) {
-		return res.status(401).json("Não autorizado");
-	}
+    next();
+  } catch (error) {
+    return res.status(401).json("Não autorizado");
+  }
 });
 
 module.exports = verifyJwt;
