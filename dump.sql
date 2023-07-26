@@ -7,7 +7,8 @@ create table users (
   cpf char(11) unique,
   phone char(11) unique
 );
-create table client(
+
+create table clients(
   id serial primary key,
   name text not null,
   email text not null unique,
