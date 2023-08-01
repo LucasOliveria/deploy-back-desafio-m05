@@ -8,7 +8,6 @@ const sumValue = (data, value) => {
   return total_values
 }
 
-
 const clientsByStatus = (data, value) => {
   const defaultersClients = []
   data.map((client) => {
@@ -32,7 +31,6 @@ const clients = (data, value) => {
   })
   return client
 }
-
 
 module.exports = {
   sumValue,

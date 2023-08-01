@@ -46,5 +46,4 @@ const listChargesBystatus = async (req, res) => {
   }
 }
 
-
 module.exports = listChargesBystatus

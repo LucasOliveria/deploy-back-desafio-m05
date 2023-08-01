@@ -40,9 +40,4 @@ routes.get('/charges/paid', paidCharges)
 routes.get('/charges/unpaid', unpaidCharges)
 routes.get('/charges/pending', pendingCharges)
 
-
-//routes.get('/charge/:id', getCharge); //single charge (id da cobrança)
-//routes.put('/charge', updateCharge);
-//routes.delete('/charge', deleteCharge);
-
 module.exports = routes;
