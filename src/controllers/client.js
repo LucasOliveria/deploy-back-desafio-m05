@@ -92,12 +92,6 @@ const updateClient = async (req, res) => {
       return res.status(400).json("O CPF informado já está cadastrado.");
     }
 
-    const existingPhone = await knex("clients").where({ phone }).first();
-
-    if (existingPhone && existingPhone.phone !== existingClient.phone) {
-      return res.status(400).json("O telefone informado já está cadastrado.");
-    }
-
     if (zip_code) {
       dataToBeUpdated.zip_code = zip_code;
     }
@@ -126,7 +120,31 @@ const updateClient = async (req, res) => {
       .where({ id })
       .update(dataToBeUpdated);
 
-    return res.status(200).json("Cliente atualizado com sucesso!");
+    const updateClientFormat = await knex('clients as c')
+      .select([
+        'c.id',
+        'c.name',
+        'c.email',
+        'c.cpf',
+        'c.phone',
+        'c.zip_code',
+        'c.public_place',
+        'c.complement',
+        'c.district',
+        'c.city',
+        'c.uf',
+        knex.raw(`
+      CASE
+        WHEN COUNT(ch.id) = 0 THEN true
+        WHEN COUNT(ch.id) FILTER (WHERE ch.due_date < CURRENT_DATE AND ch.status = 'pendente') > 0 THEN false
+        ELSE true
+      END AS up_to_date
+    `)
+      ])
+      .leftJoin('charges as ch', 'c.id', 'ch.client_id').where('c.id', id)
+      .groupBy('c.id').first();
+
+    return res.status(200).json(updateClientFormat);
 
   } catch (error) {
     return res.status(500).json("Erro interno do servidor.");
