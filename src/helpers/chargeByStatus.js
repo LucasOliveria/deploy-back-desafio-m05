@@ -85,7 +85,6 @@ const controlValues = {
     .leftJoin('charges as ch', 'c.id', 'ch.client_id')
     .groupBy('c.id')
 
-
 }
 
 module.exports = {
