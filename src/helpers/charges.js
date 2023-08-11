@@ -3,13 +3,13 @@ const sumValue = (data, value) => {
     if (item.up_to_date === value) {
       return acumulator + item.value
     }
-    return acumulator
+    return acumulator;
   }, 0)
-  return total_values
+  return total_values;
 }
 
 const clientsByStatus = (data, value) => {
-  const defaultersClients = []
+  const defaultersClients = [];
   data.map((client) => {
     if (client.up_to_date === value) {
       return defaultersClients.push({
@@ -19,17 +19,17 @@ const clientsByStatus = (data, value) => {
       })
     }
   })
-  return defaultersClients
+  return defaultersClients;
 }
 
 const clients = (data, value) => {
-  const client = []
+  const client = [];
   data.map((item) => {
     if (item.up_to_date === value) {
-      return client.push(item)
+      return client.push(item);
     }
   })
-  return client
+  return client;
 }
 
 module.exports = {

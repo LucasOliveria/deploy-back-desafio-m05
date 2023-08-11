@@ -1,14 +1,7 @@
 const joi = require("joi");
 
-const validateCharge = joi.object({
+const validateChargeUpload = joi.object({
 
-  client_id: joi.number().positive().integer().required().messages({
-    "any.required": "A identificação do cliente é obrigatóriad.",
-    "number.empty": "A identificação do cliente é obrigatórias.",
-    "number.base": " Código do cliente inválido. Valor deve ser numérico.",
-    "number.integer": "Código do cliente deve ser inteiro.",
-    "number.positive": "Código do cliente deve ser positivo.",
-  }),
   description: joi.string().required().trim().messages({
     "any.required": "A descrição da cobrança é obrigatória.",
     "string.empty": "A descrição da cobrança é obrigatória.",
@@ -39,4 +32,5 @@ const validateCharge = joi.object({
 
 });
 
-module.exports = validateCharge;
+
+module.exports = validateChargeUpload;

@@ -2,7 +2,7 @@ const knex = require("../database/knexConfig");
 
 const createClient = async (req, res) => {
 
-  const client = req.body
+  const client = req.body;
   try {
     const findEmail = await knex("clients").where({ email: client.email }).first();
     const findcpf = await knex("clients").where({ cpf: client.cpf }).first();
