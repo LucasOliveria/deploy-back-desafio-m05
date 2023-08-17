@@ -28,7 +28,7 @@ const createCharge = async (req, res) => {
         knex.raw(`
                     CASE
                         WHEN ch.status = 'pago' THEN 'Paga'
-                        WHEN ch.status = 'pendente' AND ch.due_date < NOW() THEN 'Vencida'
+                        WHEN ch.status = 'pendente' AND ch.due_date < CURRENT_DATE THEN 'Vencida'
                         ELSE 'Pendente'
                     END AS up_to_date
                 `)
@@ -95,7 +95,7 @@ const getChargesData = async () => {
         knex.raw(`
                     CASE
                         WHEN ch.status = 'pago' THEN 'Paga'
-                        WHEN ch.status = 'pendente' AND ch.due_date < NOW() THEN 'Vencida'
+                        WHEN ch.status = 'pendente' AND ch.due_date < CURRENT_DATE THEN 'Vencida'
                         ELSE 'Pendente'
                     END AS up_to_date
                 `)

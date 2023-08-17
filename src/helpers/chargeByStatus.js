@@ -10,13 +10,13 @@ const controlValues = {
   totalOverdueChargesValue: knex('charges')
     .select()
     .sum('value as total')
-    .whereRaw('due_date < NOW() and status = ?', ['pendente'])
+    .whereRaw('due_date < CURRENT_DATE and status = ?', ['pendente'])
     .first(),
 
   totalExpectedChargesValue: knex('charges')
     .select()
     .sum('value as total')
-    .whereRaw('due_date > NOW() and status = ?', ['pendente'])
+    .whereRaw('due_date >= CURRENT_DATE and status = ?', ['pendente'])
     .first(),
 
   AllclientsPaidcharges: knex('clients')
@@ -27,21 +27,21 @@ const controlValues = {
   AllClientsOverdueCharges: knex('clients')
     .select('clients.*')
     .join('charges', 'clients.id', '=', 'charges.client_id')
-    .whereRaw('due_date < NOW() and status = ?', ['pendente']),
+    .whereRaw('due_date < CURRENT_DATE and status = ?', ['pendente']),
 
   AllClientsExpectedCharges: knex('clients')
     .select('clients.*')
     .join('charges', 'clients.id', '=', 'charges.client_id')
-    .whereRaw('due_date > NOW() and status = ?', ['pendente']),
+    .whereRaw('due_date >= CURRENT_DATE and status = ?', ['pendente']),
 
   amountPaidChargesValue: knex('charges')
     .where('status', '=', 'pago'),
 
   amountExpectedCharges: knex('charges')
-    .whereRaw('due_date > NOW() and status = ?', ['pendente']),
+    .whereRaw('due_date >= CURRENT_DATE and status = ?', ['pendente']),
 
   amountOverdueCharges: knex('charges')
-    .whereRaw('due_date < NOW() and status = ?', ['pendente']),
+    .whereRaw('due_date < CURRENT_DATE and status = ?', ['pendente']),
 
   allCharges: knex('charges as ch')
     .select(
@@ -54,7 +54,7 @@ const controlValues = {
       knex.raw(`
                 CASE
                     WHEN ch.status = 'pago' THEN 'Paga'
-                    WHEN ch.status = 'pendente' AND ch.due_date < NOW() THEN 'Vencida'
+                    WHEN ch.status = 'pendente' AND ch.due_date < CURRENT_DATE THEN 'Vencida'
                     ELSE 'Pendente'
                 END AS up_to_date
             `)
