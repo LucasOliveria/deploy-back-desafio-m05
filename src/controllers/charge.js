@@ -165,13 +165,21 @@ const deleteCharge = async (req, res) => {
     const { id } = req.params;
 
     const charge = await knex('charges').where({ id: id }).first();
+
     if (!charge) {
       return res.status(404).json("Cobrança não encontrada.");
     }
     if (charge.status === 'pago') {
       return res.status(400).json("Não se pode apagar cobranças pagas.");
     }
-    if (charge.due_date < new Date()) {
+
+    const today = new Date();
+
+    today.setUTCHours(0, 0, 0, 0);
+
+    const dueDate = new Date(charge.due_date);
+
+    if (dueDate < today) {
       return res.status(400).json("Não se pode apagar cobranças vencidas.");
     }
 
